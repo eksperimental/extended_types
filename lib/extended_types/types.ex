@@ -1,5 +1,7 @@
 defmodule ExtendedTypes.Types do
-  @moduledoc false
+  @moduledoc """
+  This module lists all the types availables in `ExtendedTypes`.
+  """
 
   Module.register_attribute(__MODULE__, :types, accumulate: true)
 
@@ -81,6 +83,16 @@ defmodule ExtendedTypes.Types do
             @type atom_map(value_type) :: %{atom => value_type}
           end}
 
+  @types {:atom_map, 2,
+          quote do
+            @typedoc """
+            Map with `key_type` and with value of `value_type`.
+
+            This type is equivalent to `t:ExtendedTypes.Types.atom_map/1`
+            """
+            @type atom_map(_key_type, value_type) :: %{(_keytype :: atom) => value_type}
+          end}
+
   # @types {:nonempty_bitstring, 0,
   #         quote do
   #           @typedoc """
@@ -101,12 +113,15 @@ defmodule ExtendedTypes.Types do
   #           @type nonempty_binary :: <<_::8, _::_*8>>
   #         end}
 
-  @types {:some, 0,
+  @types {:all, 0,
    quote do
      @typedoc """
-     Any value except `none` (aka `no_return`).
+     All types.
+
+     A broken-down list akin to `t:any/0` or `t:term/0`.
+     This is particularly usefull when you want to manually created a type that exclude certain elements.
      """
-     @type some ::
+     @type all ::
              atom
              | bitstring
              | pid
@@ -123,23 +138,25 @@ defmodule ExtendedTypes.Types do
              # lists
              | list()
              | nonempty_improper_list(any, any)
+             | no_return()
    end}
 
-  @types {:any_but_empty_list, 0,
-          quote do
-            @type any_but_empty_list ::
-                    atom
-                    | bitstring
-                    | float
-                    | fun
-                    | integer
-                    | map
-                    | nonempty_maybe_improper_list(any, any)
-                    | pid
-                    | port
-                    | reference
-                    | tuple
-          end}
+  # @types {:any_but_empty_list, 0,
+  #         quote do
+  #           @type any_but_empty_list ::
+  #                   atom
+  #                   | bitstring
+  #                   | float
+  #                   | fun
+  #                   | integer
+  #                   | map
+  #                   | nonempty_maybe_improper_list(any, any)
+  #                   | pid
+  #                   | port
+  #                   | reference
+  #                   | tuple
+  #                   | no_return()
+  #         end}
 
   # Aliases
   @types {:empty_bitstring, 0,
@@ -192,6 +209,11 @@ defmodule ExtendedTypes.Types do
             @type improper_list(content_type, termination_type) ::
                     nonempty_maybe_improper_list(content_type, termination_type)
           end}
+
+  # load all types
+  for {_type, _arity, quoted} <- @types do
+    Module.eval_quoted(__MODULE__, quoted)
+  end
 
   def types(), do: @types
 end
