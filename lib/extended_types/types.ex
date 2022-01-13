@@ -130,6 +130,7 @@ defmodule ExtendedTypes.Types do
              | tuple
              | fun
              | map
+             | no_return()
 
              # numbers
              | float
@@ -137,26 +138,23 @@ defmodule ExtendedTypes.Types do
 
              # lists
              | list()
-             | nonempty_improper_list(any, any)
-             | no_return()
+             | nonempty_improper_list(any, any_but_list)
    end}
 
-  # @types {:any_but_empty_list, 0,
-  #         quote do
-  #           @type any_but_empty_list ::
-  #                   atom
-  #                   | bitstring
-  #                   | float
-  #                   | fun
-  #                   | integer
-  #                   | map
-  #                   | nonempty_maybe_improper_list(any, any)
-  #                   | pid
-  #                   | port
-  #                   | reference
-  #                   | tuple
-  #                   | no_return()
-  #         end}
+  @types {:any_but_list, 0,
+          quote do
+            @type any_but_list ::
+                    atom
+                    | bitstring
+                    | float
+                    | fun
+                    | integer
+                    | map
+                    | pid
+                    | port
+                    | reference
+                    | tuple
+          end}
 
   # Aliases
   @types {:empty_bitstring, 0,
@@ -196,7 +194,7 @@ defmodule ExtendedTypes.Types do
 
             Alias of `nonempty_improper_list(any, any)`.
             """
-            @type improper_list :: nonempty_improper_list(any, any)
+            @type improper_list :: nonempty_improper_list(any, any_but_list)
           end}
 
   @types {:improper_list, 2,
@@ -207,7 +205,7 @@ defmodule ExtendedTypes.Types do
             Alias of `nonempty_maybe_improper_list(content_type, termination_type)`.
             """
             @type improper_list(content_type, termination_type) ::
-                    nonempty_maybe_improper_list(content_type, termination_type)
+                    nonempty_improper_list(content_type, termination_type)
           end}
 
   # load all types
