@@ -86,11 +86,37 @@ defmodule ExtendedTypes.Types do
   @types {:atom_map, 2,
           quote do
             @typedoc """
-            Map with `key_type` and with value of `value_type`.
+            Map with atom `key_type` and with value of `value_type`.
 
             This type is equivalent to `t:ExtendedTypes.Types.atom_map/1`
             """
-            @type atom_map(_key_type, value_type) :: %{(_keytype :: atom) => value_type}
+            @type atom_map(key_type, value_type) :: %{key_type => value_type}
+          end}
+
+  @types {:struct, 1,
+          quote do
+            @typedoc """
+            Struct `name` with all fields of any type.
+
+            `name` is expected to be an atom.
+            """
+            @type struct(name) :: %{
+                    :__struct__ => name,
+                    optional(atom()) => any()
+                  }
+          end}
+
+  @types {:struct, 2,
+          quote do
+            @typedoc """
+            Struct `name` with all fields of `value_type`.
+
+            `name` is expected to be an atom.
+            """
+            @type struct(name, value_type) :: %{
+                    :__struct__ => name,
+                    optional(atom()) => value_type
+                  }
           end}
 
   # @types {:nonempty_bitstring, 0,
@@ -185,6 +211,26 @@ defmodule ExtendedTypes.Types do
             Alias of `%{}`. This is to bring typespecs mentally closer to pattern matching, while patter-matching `%{}` matches any type of map.
             """
             @type empty_map :: %{}
+          end}
+
+  @types {:empty_list, 0,
+          quote do
+            @typedoc """
+            Empty list.
+
+            Alias of `[]`.
+            """
+            @type empty_list :: []
+          end}
+
+  @types {:empty_tuple, 0,
+          quote do
+            @typedoc """
+            Empty tuple.
+
+            Alias of `%{}`.
+            """
+            @type empty_tuple :: {}
           end}
 
   @types {:improper_list, 0,
