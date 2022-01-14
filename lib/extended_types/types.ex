@@ -145,7 +145,7 @@ defmodule ExtendedTypes.Types do
      All types.
 
      A broken-down list akin to `t:any/0` or `t:term/0`.
-     This is particularly usefull when you want to manually created a type that exclude certain elements.
+     This is particularly usefull when you want to manually create a type that exclude certain elements.
      """
      @type all ::
              atom
@@ -169,6 +169,16 @@ defmodule ExtendedTypes.Types do
 
   @types {:any_but_list, 0,
           quote do
+            @typedoc """
+            Any type but a list.
+
+            Useful to use as the termination type of improper lists.
+
+            ## Examples
+
+                @type your_list :: nonempty_improper_list(any, any_but_list)
+
+            """
             @type any_but_list ::
                     atom
                     | bitstring
@@ -259,6 +269,7 @@ defmodule ExtendedTypes.Types do
     Module.eval_quoted(__MODULE__, quoted)
   end
 
+  @spec types() :: [{ExtendedTypes.type_name(), arity(), Macro.t() | improper_list()}]
   def types(), do: @types
 
   @doc false

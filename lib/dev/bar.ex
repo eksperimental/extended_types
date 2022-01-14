@@ -1,7 +1,6 @@
+# Testing module.
 defmodule Bar do
-  @moduledoc """
-  Testing module.
-  """
+  @moduledoc false
 
   use ExtendedTypes, all?: true
 

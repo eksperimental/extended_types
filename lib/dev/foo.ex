@@ -1,7 +1,5 @@
+# Testing module.
 defmodule Foo do
-  # @moduledoc """
-  # Sample module.
-  # """
   @moduledoc false
 
   # use ExtendedTypes

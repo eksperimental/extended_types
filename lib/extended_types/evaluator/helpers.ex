@@ -3,7 +3,7 @@ defmodule ExtendedTypes.Evaluator.Helpers do
   Evaluator helpers.
   """
 
-  defmacro any(), do: quote(do: {:any, []})
-  defmacro atom(), do: quote(do: {:atom, []})
-  defmacro module(), do: quote(do: {:module, []})
+  defmacro any(), do: quote(do: {:any, 0})
+  defmacro atom(), do: quote(do: {:atom, 0})
+  defmacro module(), do: quote(do: {:module, 0})
 end

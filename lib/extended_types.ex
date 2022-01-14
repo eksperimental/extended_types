@@ -11,6 +11,8 @@ defmodule ExtendedTypes do
   * `:except`: keyword list containing all the types and arity of the types to be excluded.
     This options overrides `:all?` and `:only`.
 
+  For a list of the available extended types see `ExtededTypes.`.
+
   ## Examples
 
       defmodule Foo do
@@ -29,6 +31,8 @@ defmodule ExtendedTypes do
         def my_map(key) when is_binary(key), do: %{"a" => 1}
       end
   """
+
+  @type type_name :: atom()
 
   defmacro __using__(options \\ []) do
     all? =

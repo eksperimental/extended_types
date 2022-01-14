@@ -3,9 +3,9 @@ defmodule ExtendedTypes.Evaluator.Tree do
   Evaluator module for types.
   """
 
-  use ExtendedTypes, only: [nonempty_keyword: 2]
+  @type type_name :: ExtendedTypes.type_name()
 
-  @type type_name :: atom()
+  use ExtendedTypes, only: [nonempty_keyword: 2]
 
   @typedoc """
   A type hierarchical structure, known as tree.
