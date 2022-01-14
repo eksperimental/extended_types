@@ -43,12 +43,12 @@ defmodule ExtendedTypes.Types do
             @type nonempty_keyword(key_type, value_type) :: nonempty_list({key_type, value_type})
           end}
 
-  @types {:falsey, 0,
+  @types {:falsy, 0,
           quote do
             @typedoc """
-            Falsey. Any valud that is `nil` or `false`.
+            Falsy. Any valud that is `nil` or `false`.
             """
-            @type falsey :: nil | false
+            @type falsy :: nil | false
           end}
 
   @types {:string_map, 0,
