@@ -260,4 +260,12 @@ defmodule ExtendedTypes.Types do
   end
 
   def types(), do: @types
+
+  @doc false
+  def types_kw() do
+    for {type_name, arity, _} <- @types do
+      {type_name, arity}
+    end
+    |> Enum.sort()
+  end
 end
