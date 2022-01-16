@@ -3,8 +3,11 @@ defmodule ExtendedTypes.Evaluator do
   Evaluator module for types.
   """
 
-  import ExtendedTypes.Evaluator.Helpers
+  use ExtendedTypes, only: [nonempty_keyword: 2]
 
+  @type type_name :: ExtendedTypes.type_name()
+
+  @spec all() :: nonempty_keyword(type_name, arity)
   def all() do
     [
       atom: 0,
@@ -23,7 +26,8 @@ defmodule ExtendedTypes.Evaluator do
 
       # lists
       list: 0,
-      nonempty_improper_list: [any(), any_but_list: 0]
+      # nonempty_improper_list: [any(), any_but_list: 0]
+      nonempty_improper_list: 2
     ]
   end
 
